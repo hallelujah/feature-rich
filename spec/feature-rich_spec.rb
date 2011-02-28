@@ -10,7 +10,7 @@ describe FeatureRich do
     lambda{FeatureRich::Config}.should_not raise_exception
   end
 
-  it "should respond_to #configure" do
+  it "should respond to #configure" do
     should respond_to(:configure).with(1)
   end
   
@@ -28,21 +28,41 @@ describe FeatureRich do
       @config = FeatureRich::Config.new
       @config.should_receive(:instance_exec).once
       @config.stub!(:feature_model).and_return("Feature")
-      @config.stub!(:feature_model).and_return("Feature")
+      FeatureRich.config.should_receive(:merge!).once
       FeatureRich.configure(@config) do
         feature_model = "Feature"
       end
     end.should_not raise_exception
   end
 
-  it "should respond_to #run" do
+  it "should respond to #run" do
     should respond_to(:run)
     FeatureRich.should_receive(:bootstrap!).once
-    FeatureRich.config.should_receive(:merge!).once
     FeatureRich.run do
-      feature_model "OtherModel"
+      configure do
+        feature_model "OtherModel"
+        config_file  File.expand_path('../config.yml',__FILE__)
+      end
     end
-    FeatureRich.config.feature_model.should == "OtherModel"
+  end
+
+  it "should define VALID_KEYS constant" do
+    FeatureRich.const_defined?(:VALID_KEYS).should be_true
+    FeatureRich::VALID_KEYS.should =~ [:feature_table, :feature_model, :config_file]
+  end
+
+  it "should raise ArgumentError on bad options " do
+    lambda do
+      FeatureRich.run do
+        configure do
+          bad_option "Hello"
+        end
+      end
+    end.should raise_exception(ArgumentError)
+  end
+
+  it "should respond to #feature" do
+    FeatureRich.should respond_to(:feature).with(1)
   end
 
 end
