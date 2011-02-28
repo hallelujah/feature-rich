@@ -41,3 +41,4 @@ tmtags
 # For vim:
 *.swp
 *sqlite3
+*.log
