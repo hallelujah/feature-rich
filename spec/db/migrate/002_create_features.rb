@@ -1,7 +1,7 @@
 class CreateFeatures < ActiveRecord::Migration
   def self.up
     create_table :features do |t|
-      t.text :features
+      t.text :content
       t.string :featured_type
       t.string :featured_id
     end

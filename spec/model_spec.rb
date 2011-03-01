@@ -11,9 +11,6 @@ describe FeatureRich::ModelBehaviour do
     end
     SuperHero = Class.new(ActiveRecord::Base)
     SuperHero.has_feature
-    Feature = Class.new(ActiveRecord::Base)
-    Feature.belongs_to :featured, :polymorphic => true
-    Feature.serialize :features, Array
   end
 
   # Called before each test
@@ -32,21 +29,20 @@ describe FeatureRich::ModelBehaviour do
 
   it "should respond to #features" do
     @superman.should respond_to(:features)
-    @superman.features.should == []
+    @superman.features.should == FeatureRich::FeatureStruct.default
     @superman.features = [:fly]
-    @superman.features.should == [:fly]
-    @superman.feature.should be_an_instance_of Feature
+    @superman.features.features.should == [:fly]
+    @superman.feature.should be_an_instance_of FeatureRich::Feature
     @superman.feature.new_record?.should be_true
     @superman.name =  "Clark Kent"
     @superman.save!
     @superman.reload
-    @superman.feature.should_not == []
-    @superman.feature.should be_an_instance_of Feature
-    @superman.features.should == [:fly]
+    @superman.feature.should be_an_instance_of FeatureRich::Feature
+    @superman.features.features.should == [:fly]
     @superman.features = [:fly, :strong]
     @superman.save!
     @superman.reload
-    @superman.features.should == [:fly, :strong]
+    @superman.features.features.should == [:fly, :strong]
   end
 
   it "should respond to #has_feature?" do
@@ -62,4 +58,15 @@ describe FeatureRich::ModelBehaviour do
     @superman.has_feature?(group).should be_true
   end
 
+  it "should respond to  #has_feature? with option group" do
+    g = FeatureRich::GroupFeature.new(:flying)
+    FeatureRich::Engine.run do
+      group :flying do
+        feature :wings
+      end
+    end
+    @superman.features = [:fly, g ]
+    @superman.features.group_features.should == [:flying]
+    @superman.has_feature?(:flying, :group => true).should be_true
+  end
 end
