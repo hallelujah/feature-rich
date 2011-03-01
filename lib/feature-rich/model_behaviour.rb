@@ -22,7 +22,7 @@ module FeatureRich
         if feature 
           feature.features = ary 
         else
-          build_feature( :features => ary)
+          build_feature(:features => ary)
         end
       end
 

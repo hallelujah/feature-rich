@@ -61,8 +61,33 @@ describe FeatureRich do
     end.should raise_exception(ArgumentError)
   end
 
+  it "should respond to #features" do
+    FeatureRich.should respond_to(:features)
+    FeatureRich.features.should == Set.new
+  end
+
+  it "should respond to #groups" do
+    FeatureRich.should respond_to(:groups)
+    FeatureRich.groups.should == HashWithIndifferentAccess.new
+  end
+
   it "should respond to #feature" do
     FeatureRich.should respond_to(:feature).with(1)
+    FeatureRich.feature(:fly)
+    FeatureRich.features.should include(:fly)
+  end
+
+  it "should respond to #group" do
+    FeatureRich.should respond_to(:feature).with(1)
+    group_feature = mock('FeatureRich::GroupFeature')
+    FeatureRich.groups.should_receive(:[]=).once.with(:masked,anything)
+    FeatureRich.groups.should_receive(:[]).once
+    FeatureRich.should_receive(:features=).once
+    FeatureRich.should_receive(:features).once.and_return(Set.new)
+    FeatureRich.group(:masked) do
+      feature :black_color
+      feature :full_face
+    end
   end
 
 end

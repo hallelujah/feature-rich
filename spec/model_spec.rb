@@ -46,4 +46,17 @@ describe FeatureRich::ModelBehaviour do
     @superman.features.should == [:fly, :strong]
   end
 
+  it "should respond to #has_feature?" do
+    @superman.should respond_to(:has_feature?)
+    @superman.has_feature?(:fly).should be_false
+    @superman.features = [:fly]
+    @superman.has_feature?(:fly).should be_true
+
+    group = FeatureRich::GroupFeature.new(:flying)
+    # Mocking is more convenient
+    group.should_receive(:subset?).twice.and_return(false,true)
+    @superman.has_feature?(group).should be_false
+    @superman.has_feature?(group).should be_true
+  end
+
 end
