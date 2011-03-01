@@ -2,8 +2,9 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 require File.expand_path(File.dirname(__FILE__) + '/db_helper')
 
 describe FeatureRich::ModelBehaviour do
+  # Called once
   before(:all) do
-    FeatureRich.run do
+    FeatureRich::Engine.run do
       configure do
         feature_model "Feature"
       end
@@ -15,7 +16,9 @@ describe FeatureRich::ModelBehaviour do
     Feature.serialize :features, Array
   end
 
+  # Called before each test
   before do
+    FeatureRich::Engine.config.clear
     @superman = SuperHero.new
     @superman.should be_an_instance_of SuperHero
     @superman.new_record?.should be_true
