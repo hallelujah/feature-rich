@@ -3,6 +3,8 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 describe FeatureRich::Engine do
   before do
     FeatureRich::Engine.config.clear
+    FeatureRich::Engine.groups.clear
+    FeatureRich::Engine.features.clear
   end
 
   it "should require activerecord" do
@@ -91,6 +93,17 @@ describe FeatureRich::Engine do
       feature :black_color
       feature :full_face
     end
+  end
+
+  it "should respond to load!" do
+    FeatureRich::Engine.should respond_to(:load!)
+    Rails = mock('hello')
+    root = mock('root')
+    root.stub!(:join).and_return(File.expand_path('../config.rb',__FILE__))
+    Rails.stub!(:root).and_return(root)
+    FeatureRich::Engine.load!
+    FeatureRich::Engine.groups.should have_key(:color)
+    FeatureRich::Engine.features.to_a.should =~ [ :red,:blue ]
   end
 
 end

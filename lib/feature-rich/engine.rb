@@ -30,6 +30,15 @@ module FeatureRich
         bootstrap!
       end
 
+      def load!
+        if Object.const_defined?(:Rails) && Rails.root
+          self.config.config_file ||= Rails.root.join('config/feature-rich.rb').to_s
+        end
+        run do
+          eval(File.read(self.config.config_file))
+        end
+      end
+
       def feature(name)
         self.features << name.to_sym
       end
