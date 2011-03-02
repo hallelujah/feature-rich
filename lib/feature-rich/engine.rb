@@ -46,8 +46,8 @@ module FeatureRich
         self.features << name.to_sym
       end
 
-      def group(name, &block)
-        group = (self.groups[name.to_sym] || FeatureRich::GroupFeature.new(name)).configure(&block)
+      def group(name, opts = {}, &block)
+        group = (self.groups[name.to_sym] || FeatureRich::GroupFeature.new(name, opts)).configure(&block)
         self.features += group.sets
         self.groups[name.to_sym] = group
       end

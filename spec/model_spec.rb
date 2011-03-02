@@ -74,10 +74,30 @@ describe FeatureRich::ModelBehaviour do
       group :flying do
         feature :wings
       end
+      group :singing do
+        feature :voice
+      end
     end
     @superman.features = [:fly, g ]
     @superman.features.group_features.should == [:flying]
     @superman.has_feature?(:flying, :group => true).should be_true
+    @superman.has_feature?(:singing, :group => true).should be_false
+  end
+
+  it "should have feature if group is disabled" do
+    g = FeatureRich::GroupFeature.new(:flying, :disabled => true)
+    FeatureRich::Engine.run do
+      group :flying do
+        feature :wings
+      end
+      group :singing do
+        feature :voice
+      end
+    end
+    @superman.features = [:fly, g ]
+    @superman.features.group_features.should == [:flying]
+    @superman.has_feature?(:flying, :group => true).should be_true
+
   end
 
 end

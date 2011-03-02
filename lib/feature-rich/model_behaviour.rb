@@ -28,7 +28,7 @@ module FeatureRich
           when Symbol, String
             features.features.include?(f.to_sym)
           when GroupFeature
-            f.subset?(features.features) || features.group_features.include?(f.name)
+            f.disabled? || f.subset?(features.features) || features.group_features.include?(f.name)
           end
         end
       end
