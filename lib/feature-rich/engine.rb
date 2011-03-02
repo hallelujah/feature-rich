@@ -40,6 +40,9 @@ module FeatureRich
       end
 
       def feature(name)
+        group(:_none_) do
+          feature name
+        end
         self.features << name.to_sym
       end
 

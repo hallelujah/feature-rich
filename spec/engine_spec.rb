@@ -80,6 +80,8 @@ describe FeatureRich::Engine do
     FeatureRich::Engine.should respond_to(:feature).with(1)
     FeatureRich::Engine.feature(:fly)
     FeatureRich::Engine.features.should include(:fly)
+    FeatureRich::Engine.groups.should include(:_none_)
+    FeatureRich::Engine.groups[:_none_].sets.should =~ [:fly]
   end
 
   it "should respond to #group" do
