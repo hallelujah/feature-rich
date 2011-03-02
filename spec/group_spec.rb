@@ -1,16 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 describe FeatureRich::GroupFeature do
+
   before do
     @group = FeatureRich::GroupFeature.new(:a_group)
-  end
-
-  it "should respond to #new with a name" do
-    FeatureRich::GroupFeature.should respond_to(:new).with(1)
-  end
-
-  it "should define a instance attribute reader :name" do
-    @group.should respond_to(:name)
-    @group.name.should be_an_instance_of(Symbol)
   end
 
   it "should define instance attribute accessor :sets" do
@@ -38,29 +30,5 @@ describe FeatureRich::GroupFeature do
     end
     @group.subset?([:red, :green, :blue, :orange]).should be_true
     @group.subset?([:red, :black]).should be_false
-  end
-
-  it "should be labeled" do
-    lambda do
-      @group = FeatureRich::GroupFeature.new(:a_group, :label => "This group")
-    end.should_not raise_exception
-    @group.should respond_to(:label)
-
-    @group.label.should == 'This group'
-    @group.should respond_to(:label=)
-
-    @group.label = 'Other group'
-    @group.label.should == 'Other group'
-  end
-
-  it "should be disabled" do
-    group = FeatureRich::GroupFeature.new(:a_group, :disabled => true)
-    group.disabled?.should be_true
-
-    group = FeatureRich::GroupFeature.new(:a_group, :disabled => false)
-    group.disabled?.should be_false
-
-    group.disabled = true
-    group.disabled?.should be_true
   end
 end

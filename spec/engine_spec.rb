@@ -79,9 +79,9 @@ describe FeatureRich::Engine do
   it "should respond to #feature" do
     FeatureRich::Engine.should respond_to(:feature).with(1)
     FeatureRich::Engine.feature(:fly)
-    FeatureRich::Engine.features.should include(:fly)
+    FeatureRich::Engine.features.map(&:name).should include(:fly)
     FeatureRich::Engine.groups.should include(:_none_)
-    FeatureRich::Engine.groups[:_none_].sets.should =~ [:fly]
+    FeatureRich::Engine.groups[:_none_].sets.map(&:name).should =~ [:fly]
   end
 
   it "should respond to #group" do
@@ -105,7 +105,9 @@ describe FeatureRich::Engine do
     Rails.stub!(:root).and_return(root)
     FeatureRich::Engine.load!
     FeatureRich::Engine.groups.should have_key(:color)
-    FeatureRich::Engine.features.to_a.should =~ [ :red,:blue ]
+    FeatureRich::Engine.features.should_not be_empty
+    FeatureRich::Engine.features.should satisfy{|set| set.all?{ |n| FeatureRich::FeatureHandler === n} }
+    FeatureRich::Engine.features.map(&:name).to_a.should =~ [ :red,:blue ]
   end
 
 end

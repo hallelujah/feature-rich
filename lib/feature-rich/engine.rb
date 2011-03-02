@@ -39,11 +39,10 @@ module FeatureRich
         end
       end
 
-      def feature(name)
+      def feature(name, options = {})
         group(:_none_) do
-          feature name
+          feature name, options
         end
-        self.features << name.to_sym
       end
 
       def group(name, opts = {}, &block)

@@ -1,6 +1,7 @@
 require 'rubygems'
 gem 'activerecord', '~> 2.3.2'
 require 'activerecord'
+require 'feature-rich/feature_handler'
 require 'feature-rich/engine'
 require 'feature-rich/config'
 require 'feature-rich/model_behaviour'

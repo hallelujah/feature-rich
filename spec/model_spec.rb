@@ -16,6 +16,8 @@ describe FeatureRich::ModelBehaviour do
   # Called before each test
   before do
     FeatureRich::Engine.config.clear
+    FeatureRich::Engine.features.clear
+    FeatureRich::Engine.groups.clear
     @superman = SuperHero.new
     @superman.should be_an_instance_of SuperHero
     @superman.new_record?.should be_true
@@ -97,7 +99,16 @@ describe FeatureRich::ModelBehaviour do
     @superman.features = [:fly, g ]
     @superman.features.group_features.should == [:flying]
     @superman.has_feature?(:flying, :group => true).should be_true
+  end
 
+  it "should have feature if Feature is disabled" do
+    FeatureRich::Engine.run do
+      feature :wings
+      feature :voice, :disabled => true
+    end
+    @superman.features = [:fly ]
+    @superman.features.features.should == [:fly]
+    @superman.has_feature?(:voice).should be_true
   end
 
 end

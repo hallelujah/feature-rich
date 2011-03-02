@@ -1,27 +1,23 @@
 module FeatureRich
-  class GroupFeature
+  class GroupFeature < FeatureRich::FeatureHandler
 
-    attr_reader :name
-    attr_accessor :sets, :label, :disabled
+    attr_accessor :sets
 
     def initialize(group_name, options = {})
-      @name = group_name.to_sym
-      @label = options[:label]
+      super
       @sets = []
-      @disabled = !! options[:disabled]
-    end
-
-
-    def disabled?
-     !! @disabled
     end
 
     def subset?(ary)
-      (sets & ary) == sets
+      (names & ary) == names
     end
 
-    def feature(name)
-      sets << name.to_sym
+    def names
+      sets.map(&:name)
+    end
+
+    def feature(name, options = {})
+      sets << FeatureRich::FeatureHandler.new(name.to_sym, options)
     end
 
     def configure(&block)

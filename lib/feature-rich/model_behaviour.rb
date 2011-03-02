@@ -29,6 +29,8 @@ module FeatureRich
             features.features.include?(f.to_sym)
           when GroupFeature
             f.disabled? || f.subset?(features.features) || features.group_features.include?(f.name)
+          when FeatureHandler
+            f.disabled? || features.features.include?(f.name)
           end
         end
       end
@@ -39,11 +41,11 @@ module FeatureRich
         (feature || build_feature(:content => FeatureStruct.default))
       end
 
-      def with_group(name, with)
+      def with_group(fname, with)
         if with
-          feature = FeatureRich::Engine.groups[name]
+          feature = FeatureRich::Engine.groups[fname]
         else
-          feature = name
+          feature = FeatureRich::Engine.features.find{|f| f.name == fname} || fname
         end
         yield(feature) || false
       end
