@@ -7,7 +7,7 @@ module FeatureRich
 
     module ClassMethods
       def has_feature
-        has_one :feature, :as => :featured, :class_name => "FeatureRich::Feature"
+        has_one :feature, :as => :featured, :class_name => "FeatureRich::Feature", :autosave => true
         include InstanceMethods
       end
     end # ClassMethods

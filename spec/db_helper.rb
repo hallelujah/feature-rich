@@ -1,4 +1,5 @@
 # Extracted from rails-2.3.5/railties/lib/tasks/databases.rake
+require 'erb'
 def create_database(config)
   begin
     if config['adapter'] =~ /sqlite/

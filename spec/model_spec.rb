@@ -25,6 +25,7 @@ describe FeatureRich::ModelBehaviour do
     SuperHero.reflections[:feature].should_not be_nil
     SuperHero.reflections[:feature].macro.should == :has_one
     SuperHero.reflections[:feature].options[:as].should == :featured
+    SuperHero.reflections[:feature].options[:autosave].should be_true
   end
 
   it "should respond to #features" do
@@ -47,6 +48,7 @@ describe FeatureRich::ModelBehaviour do
     @superman.features.features.should == [:fly]
     @superman.features.group_features.should be_empty
     @superman.features = [:strong, g]
+    @superman.changed?.should be_false
     @superman.save!
     @superman.reload
     @superman.features.features.should == [:strong]
