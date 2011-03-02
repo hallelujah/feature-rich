@@ -6,9 +6,10 @@ module FeatureRich
       self.group_features = []
       super
     end
-    def add(ary)
-      self.features  |= ary.grep(Symbol)
-      self.group_features |= ary.grep(GroupFeature){|g| g.name.to_sym }
+
+    def replace(ary)
+      self.features = ary.grep(Symbol)
+      self.group_features = ary.grep(GroupFeature){|g| g.name.to_sym }
     end
 
     def self.default

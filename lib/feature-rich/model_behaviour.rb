@@ -19,7 +19,7 @@ module FeatureRich
       end
 
       def features=(ary)
-        features.add(ary)
+        features.replace(ary)
       end
 
       def has_feature?(feature, options = {})

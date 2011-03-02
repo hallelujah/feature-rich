@@ -39,10 +39,10 @@ describe FeatureRich::ModelBehaviour do
     @superman.reload
     @superman.feature.should be_an_instance_of FeatureRich::Feature
     @superman.features.features.should == [:fly]
-    @superman.features = [:fly, :strong]
+    @superman.features = [:strong]
     @superman.save!
     @superman.reload
-    @superman.features.features.should == [:fly, :strong]
+    @superman.features.features.should == [:strong]
   end
 
   it "should respond to #has_feature?" do
