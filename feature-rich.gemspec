@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{feature-rich}
-  s.version = "0.0.0"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["hallelujah"]
-  s.date = %q{2011-03-01}
+  s.date = %q{2011-03-02}
   s.description = %q{Conditional statement to chose feature in your application }
   s.email = %q{hery@rails-royce.org}
   s.extra_rdoc_files = [
@@ -26,13 +26,16 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "feature-rich.gemspec",
     "init.rb",
     "lib/feature-rich.rb",
     "lib/feature-rich/config.rb",
     "lib/feature-rich/engine.rb",
+    "lib/feature-rich/feature.rb",
     "lib/feature-rich/group_feature.rb",
     "lib/feature-rich/model_behaviour.rb",
     "lib/feature-rich/railtie.rb",
+    "spec/config.rb",
     "spec/config_spec.rb",
     "spec/db.yml",
     "spec/db/migrate/001_create_super_heros.rb",
@@ -50,6 +53,7 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.5.2}
   s.summary = %q{A activerecord based selectionable feature}
   s.test_files = [
+    "spec/config.rb",
     "spec/config_spec.rb",
     "spec/db/migrate/001_create_super_heros.rb",
     "spec/db/migrate/002_create_features.rb",
