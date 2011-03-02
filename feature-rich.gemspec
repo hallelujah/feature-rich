@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{feature-rich}
-  s.version = "0.1.2"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["hallelujah"]
@@ -32,6 +32,7 @@ Gem::Specification.new do |s|
     "lib/feature-rich/config.rb",
     "lib/feature-rich/engine.rb",
     "lib/feature-rich/feature.rb",
+    "lib/feature-rich/feature_handler.rb",
     "lib/feature-rich/group_feature.rb",
     "lib/feature-rich/model_behaviour.rb",
     "lib/feature-rich/railtie.rb",
@@ -42,6 +43,7 @@ Gem::Specification.new do |s|
     "spec/db/migrate/002_create_features.rb",
     "spec/db_helper.rb",
     "spec/engine_spec.rb",
+    "spec/feature_handler.rb",
     "spec/group_spec.rb",
     "spec/helper.rb",
     "spec/model_spec.rb",
@@ -59,6 +61,7 @@ Gem::Specification.new do |s|
     "spec/db/migrate/002_create_features.rb",
     "spec/db_helper.rb",
     "spec/engine_spec.rb",
+    "spec/feature_handler.rb",
     "spec/group_spec.rb",
     "spec/helper.rb",
     "spec/model_spec.rb",
