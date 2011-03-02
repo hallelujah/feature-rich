@@ -28,6 +28,12 @@ describe FeatureRich::ModelBehaviour do
   end
 
   it "should respond to #features" do
+    g = FeatureRich::GroupFeature.new(:flying)
+    FeatureRich::Engine.run do
+      group :flying do
+        feature :wings
+      end
+    end
     @superman.should respond_to(:features)
     @superman.features.should == FeatureRich::FeatureStruct.default
     @superman.features = [:fly]
@@ -39,10 +45,12 @@ describe FeatureRich::ModelBehaviour do
     @superman.reload
     @superman.feature.should be_an_instance_of FeatureRich::Feature
     @superman.features.features.should == [:fly]
-    @superman.features = [:strong]
+    @superman.features.group_features.should be_empty
+    @superman.features = [:strong, g]
     @superman.save!
     @superman.reload
     @superman.features.features.should == [:strong]
+    @superman.features.group_features.should == [:flying]
   end
 
   it "should respond to #has_feature?" do
@@ -69,4 +77,5 @@ describe FeatureRich::ModelBehaviour do
     @superman.features.group_features.should == [:flying]
     @superman.has_feature?(:flying, :group => true).should be_true
   end
+
 end
