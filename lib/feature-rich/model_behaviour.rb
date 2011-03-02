@@ -15,11 +15,11 @@ module FeatureRich
     module InstanceMethods
 
       def features
-        (feature || build_feature(:content => FeatureStruct.default)).content
+        _feature.content
       end
 
       def features=(ary)
-        features.replace(ary)
+        _feature.modify(ary)
       end
 
       def has_feature?(feature, options = {})
@@ -34,6 +34,11 @@ module FeatureRich
       end
 
       protected
+
+      def _feature
+        (feature || build_feature(:content => FeatureStruct.default))
+      end
+
       def with_group(name, with)
         if with
           feature = FeatureRich::Engine.groups[name]

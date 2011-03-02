@@ -7,7 +7,7 @@ module FeatureRich
       super
     end
 
-    def replace(ary)
+    def modify(ary)
       self.features = ary.grep(Symbol)
       self.group_features = ary.grep(GroupFeature){|g| g.name.to_sym }
     end
@@ -25,6 +25,11 @@ module FeatureRich
 
     def after_initialize
       self.content ||= FeatureStruct.default
+    end
+
+    def modify(ary)
+      content_will_change!
+      content.modify(ary)
     end
 
     protected
